@@ -1156,24 +1156,27 @@ static int hci_uart_register_dev(struct hci_uart *hu)
 
 #if HCI_VERSION_CODE >= KERNEL_VERSION(2, 6, 36)
 	if (test_bit(HCI_UART_RAW_DEVICE, &hu->hdev_flags))
-		set_bit(HCI_QUIRK_RAW_DEVICE, &hdev->quirks);
+		hci_set_quirk(hdev, HCI_QUIRK_RAW_DEVICE);
+//		set_bit(HCI_QUIRK_RAW_DEVICE, &hdev->quirks);
 #endif
 
 #if HCI_VERSION_CODE >= KERNEL_VERSION(3, 17, 0)
 	if (test_bit(HCI_UART_EXT_CONFIG, &hu->hdev_flags))
-		set_bit(HCI_QUIRK_EXTERNAL_CONFIG, &hdev->quirks);
+		hci_set_quirk(hdev, HCI_QUIRK_EXTERNAL_CONFIG);
+//		set_bit(HCI_QUIRK_EXTERNAL_CONFIG, &hdev->quirks);
 #endif
 
 #if HCI_VERSION_CODE >= KERNEL_VERSION(3, 4, 0)
 	if (!test_bit(HCI_UART_RESET_ON_INIT, &hu->hdev_flags))
 #if HCI_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)
-		set_bit(HCI_QUIRK_RESET_ON_CLOSE, &hdev->quirks);
+		hci_set_quirk(hdev, HCI_QUIRK_RESET_ON_CLOSE);
+//		set_bit(HCI_QUIRK_RESET_ON_CLOSE, &hdev->quirks);
 #else
 		set_bit(HCI_QUIRK_NO_RESET, &hdev->quirks);
 #endif
 #endif
 
-#if HCI_VERSION_CODE >= KERNEL_VERSION(3, 4, 0)
+#if HCI_VERSION_CODE >= KERNEL_VERSION(3, 4, 0) && HCI_VERSION_CODE < KERNEL_VERSION(6, 8, 0)
 	if (test_bit(HCI_UART_CREATE_AMP, &hu->hdev_flags))
 		hdev->dev_type = HCI_AMP;
 	else
@@ -1185,7 +1188,8 @@ static int hci_uart_register_dev(struct hci_uart *hu)
 #endif
 
 #if HCI_VERSION_CODE >= KERNEL_VERSION(4, 1, 0)
-	set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
+	hci_set_quirk(hdev, HCI_QUIRK_SIMULTANEOUS_DISCOVERY);
+//	set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
 #endif
 
 #if HCI_VERSION_CODE >= KERNEL_VERSION(5, 10, 21)

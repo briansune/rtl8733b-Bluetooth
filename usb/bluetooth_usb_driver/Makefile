@@ -4,10 +4,11 @@ ifneq ($(KERNELRELEASE),)
 else
 	PWD := $(shell pwd)
 	KVER := $(shell uname -r)
-	KDIR := /lib/modules/$(KVER)/build
+	KDIR := /home/xxx/rootfs/lib/modules/xxxxx/build
+#	KDIR := /lib/modules/$(KVER)/build
 
 all:
-	$(MAKE) -C $(KDIR) M=$(PWD) modules
+	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -C $(KDIR) M=$(PWD) modules
 
 clean:
 	rm -rf *.o *.mod.c *.mod.o *.ko *.symvers *.order *.a

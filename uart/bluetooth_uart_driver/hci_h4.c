@@ -161,7 +161,7 @@ static inline int h4_check_data_len(struct hci_dev *hdev, struct h4_struct *h4, 
 	return 0;
 }
 
-#if HCI_VERSION_CODE >= KERNEL_VERSION(5, 6, 0)
+#if HCI_VERSION_CODE >= KERNEL_VERSION(5, 6, 0) && HCI_VERSION_CODE < KERNEL_VERSION(5, 10, 0)
 static inline struct hci_iso_hdr *hci_iso_hdr(const struct sk_buff *skb)
 {
 	return (struct hci_iso_hdr *) skb->data;
